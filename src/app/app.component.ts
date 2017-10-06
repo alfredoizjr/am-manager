@@ -1,3 +1,4 @@
+import { UserService } from './services/user.service';
 import { Component } from '@angular/core';
 import { NotificationsService } from 'angular2-notifications';
 
@@ -9,8 +10,8 @@ import { NotificationsService } from 'angular2-notifications';
 export class AppComponent {
 
 
-  constructor() {
-
+  constructor(userServ:UserService) {
+    userServ.chekingIsUserRegister();
   }
 
 }
