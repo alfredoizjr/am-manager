@@ -5,6 +5,7 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
 import { AppRouterRoutingModule } from './app-router/app-router-routing.module';
 import {FormsModule} from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { CustomFormsModule } from 'ng2-validation'
 //firebase
 import { AngularFireModule } from 'angularfire2';
 import { environment } from '../environments/environment';
@@ -25,6 +26,7 @@ import { SingInComponent } from './auth/sing-in/sing-in.component';
 import { DashboardComponent } from './private/dashboard/dashboard.component';
 import { ProfileComponent } from './private/profile/profile.component';
 import { NoFoundComponent } from './no-found/no-found.component';
+import { RegisterFormComponent } from './shared/register-form/register-form.component';
 
 @NgModule({
   declarations: [
@@ -35,10 +37,12 @@ import { NoFoundComponent } from './no-found/no-found.component';
     SingInComponent,
     DashboardComponent,
     ProfileComponent,
-    NoFoundComponent
+    NoFoundComponent,
+    RegisterFormComponent
   ],
   imports: [
     NgbModule.forRoot(),
+    CustomFormsModule,
     BrowserModule,
     BrowserAnimationsModule,
     SimpleNotificationsModule.forRoot(),

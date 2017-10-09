@@ -7,7 +7,7 @@
         </div>
         <blockquote class="blockquote text-center">
           <p class="mb-0">{{userProfile?.fullname}}</p>
-          <footer class="blockquote-footer">Develop Web</footer>
+          <footer class="blockquote-footer">{{userProfile?.position}}</footer>
         </blockquote>
         <hr>
         <p>
@@ -20,7 +20,7 @@
           phone:
         </p>
         <p class="text-muted">
-          788-900-2345 ext: 302
+          {{userProfile?.phone}} ext: {{userProfile?.ext}}
         </p>
       </div>
     </div>
@@ -84,13 +84,7 @@
               <p class="text-muted">Edit Your proflie</p>
               <hr>
               <!-- form edit profile -->
-              <form #f="ngForm" (ngSubmit)="updateUser(f.value)">
-                  <div class="form-group">
-                      <label for="fullname">Full Name</label>
-                      <input name="fullname" [(ngModel)]="userProfile.fullname" type="text" class="form-control" placeholder="Enter Full Name">
-                    </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-              </form>
+                <app-register-form [uid]="uid" [user-data]="userProfile" [main-registration]="false"></app-register-form>
                <!-- form edit profile -->
             </ng-template>
           </ngb-tab>

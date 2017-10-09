@@ -17,7 +17,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   userProfile: any;
   uid:string;
 
-  constructor(private userServ: UserService, private auth: AuthService, private router: Router,public notfService:NotificationService) {
+  constructor(private userServ: UserService, private auth: AuthService, private router: Router) {
 
   }
 
@@ -34,12 +34,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     });
   }
 
-  updateUser(f){
-     
-    this.userServ.updateProfile(this.uid,f).then(data=>{
-      this.notfService.success('The data was update success');
-    })
-  }
+
 
   ngOnDestroy() {
     //Called once, before the instance is destroyed.

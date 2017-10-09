@@ -1,0 +1,76 @@
+<form *ngIf="mainRegistration; else notMain" #f="ngForm" (ngSubmit)="registerUser(f.value)">
+  <!-- Full name -->
+  <div class="form-group">
+    <label for="fullname">Full Name</label>
+    <input name="fullname" ngModel #fullname="ngModel" type="text" class="form-control" placeholder="Enter Full Name" required>
+
+    <div *ngIf="fullname.touched && fullname.invalid" class="alert alert-danger">
+        <p *ngIf="fullname.errors?.required">Fullname is required</p>
+      </div>
+    </div>
+  <!-- /Full name -->
+  <!-- email field -->
+  <div *ngIf="mainRegistration" class="form-group">
+    <label for="exampleInputEmail1">Email address</label>
+    <input name="email" ngModel #email="ngModel" type="email" class="form-control"  placeholder="Enter email" email required>
+
+    <div *ngIf="email.touched && email.invalid" class="alert alert-danger">
+      <p *ngIf="email.errors?.required">Email is required</p>
+      <p *ngIf="email.errors?.email">Email Invalid</p>
+    </div>
+  </div>
+<!-- /email field -->
+<!-- position field-->
+  <div class="form-group">
+    <label for="position">Postion</label>
+    <input name="position"  ngModel #position="ngModel" type="text" class="form-control" id="position" placeholder="Position" required>
+
+    <div *ngIf="position.touched && position.invalid" class="alert alert-danger">
+        <p *ngIf="position.errors?.required">Position is required</p>
+      </div>
+  </div>
+  <!--/ position field-->
+  <!-- field ext -->
+  <div class="form-group">
+    <label for="ext">Your Ext</label>
+    <input name="ext" #ext="ngModel" ngModel type="number" class="form-control" id="ext" placeholder="ext" number required>
+   
+    <div *ngIf="ext.touched && ext.invalid" class="alert alert-danger">
+        <p *ngIf="ext.errors?.required">Ext is required</p>
+      </div>
+  </div>
+   <!-- /field ext -->
+  <div *ngIf="mainRegistration" class="form-group">
+    <label for="exampleInputPassword1">Password</label>
+    <input name="password" #password="ngModel" ngModel type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" [min]="6" required>
+
+    <div *ngIf="password.touched && password.invalid" class="alert alert-danger">
+        <p *ngIf="password.errors?.required">Password is required</p>
+        <p *ngIf="password.errors?.min">Min 6 character</p>
+      </div>
+  </div>
+
+  <button [disabled]="f.invalid" type="submit" class="btn btn-primary">Submit</button>
+</form>
+<!-- ***************************************************** -->
+<!-- ***the template is call if no the main registration **-->
+<!-- ***************************************************** -->
+<ng-template #notMain>
+  <form #f="ngForm" (ngSubmit)="updateUser(f.value)">
+    <div class="form-group">
+      <label for="fullname">Full Name</label>
+      <input name="fullname" [(ngModel)]="userData.fullname" type="text" class="form-control" placeholder="Enter Full Name">
+    </div>
+
+    <div class="form-group">
+      <label for="position">Postion</label>
+      <input name="position" [(ngModel)]="userData.position" type="position" class="form-control" id="position" placeholder="Position">
+    </div>
+
+    <div class="form-group">
+      <label for="ext">Number</label>
+      <input name="ext" [(ngModel)]="userData.ext" type="number" class="form-control" id="ext" placeholder="ext">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</ng-template>

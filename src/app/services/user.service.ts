@@ -21,6 +21,9 @@ user:Observable<any[]>
       fullname: user.fullname,
       email: user.email,
       singInData: new Date().toString(),
+      position: user.position,
+      phone: 9547091318,
+      ext:  user.ext,
       role: role 
     })
   }

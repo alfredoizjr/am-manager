@@ -11,13 +11,11 @@ import { NotificationsService } from 'angular2-notifications';
 })
 export class SingInComponent implements OnInit {
 
-  constructor(private auth: AuthService) { }
+  constructor() { }
 
   ngOnInit() {
   }
 
-  registerUser(f) {
-    this.auth.registerUser(f);
-  }
+
 
 }

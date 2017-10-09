@@ -1,0 +1,11 @@
+div .alert {
+   margin-top: 5px;
+}
+
+.field-danger{
+    border-left: 2px solid red;
+}
+
+.field-success {
+    border-left: 2px solid #09FF00;
+}
