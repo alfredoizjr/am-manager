@@ -5,15 +5,18 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './../home/home.component';
 import { LoginComponent } from './../auth/login/login.component';
 import { SingInComponent } from './../auth/sing-in/sing-in.component';
+import { NoFoundComponent } from './../no-found/no-found.component';
 //private
 import { DashboardComponent } from './../private/dashboard/dashboard.component';
+import { ProfileComponent } from './../private/profile/profile.component';
 
 const routes: Routes = [
   {path: '',component: LoginComponent},
   {path: 'login',component: LoginComponent},
   {path: 'sing-in',component: SingInComponent},
-  {path: '**',component: HomeComponent},
-  {path: 'dashboard',component: DashboardComponent,canActivate: [IsLoginGuard]}
+  {path: 'dashboard',component: DashboardComponent,canActivate: [IsLoginGuard]},
+  {path: 'profile',component: ProfileComponent,canActivate: [IsLoginGuard]},
+  {path: '**',component: NoFoundComponent},
 ];
 
 @NgModule({

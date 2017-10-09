@@ -30,4 +30,14 @@ user:Observable<any[]>
     return this.user = this.userCollection.valueChanges();
   }
 
+  getCurrentProfileUser(uid){
+     let userDoc = this.afDb.doc('user/'+uid);
+     return userDoc.valueChanges();
+  }
+
+  updateProfile(uid,userData){
+    let userDoc = this.afDb.doc('user/'+ uid).update(userData);
+    return userDoc;
+  }
+
 }

@@ -10,8 +10,8 @@ import { NotificationsService } from 'angular2-notifications';
 export class AppComponent {
 
 
-  constructor(userServ:UserService) {
-    userServ.chekingIsUserRegister();
+  constructor() {
+   
   }
 
 }

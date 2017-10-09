@@ -1,4 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
 body{
   margin-top: 80px;  
+  background-color: #eef5f9;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 0rem;
+  padding: 0px !important;
+}
+
+.card{
+  border-color: #d7dfe3;
+  border-radius: 4px;
+  -webkit-box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.05);
+
 }
