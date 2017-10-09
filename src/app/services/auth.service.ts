@@ -15,12 +15,13 @@ export class AuthService {
 
   constructor(private afAuth: AngularFireAuth, private router: Router, private userServ: UserService, public notifServ: NotificationService) {
     this.user$ = this.afAuth.authState;
+
   }
 
   registerUser(form) {
     let roll:string = 'admin';
     this.userServ.chekingIsUserRegister().subscribe(user =>{
-      if(user.length > 0){
+      if(user.length > 0 ){
         roll = 'worker';
       }else{
         roll = 'admin'

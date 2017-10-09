@@ -9,7 +9,7 @@ import { SingInComponent } from './../auth/sing-in/sing-in.component';
 import { DashboardComponent } from './../private/dashboard/dashboard.component';
 
 const routes: Routes = [
-  {path: '',component: HomeComponent},
+  {path: '',component: LoginComponent},
   {path: 'login',component: LoginComponent},
   {path: 'sing-in',component: SingInComponent},
   {path: '**',component: HomeComponent},
