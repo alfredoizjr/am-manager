@@ -12,18 +12,18 @@ success(message:string){
     showProgressBar: true,
     pauseOnHover: false,
     clickToClose: false,
-    maxLength: 150,
+    maxLength: 200,
     animate: "scale"
   });
 }
 
 error(error:string){
   this._service.error('Error!',error,{
-    timeOut: 2000,
+    timeOut: 2500,
     showProgressBar: true,
     pauseOnHover: false,
     clickToClose: false,
-    maxLength: 150,
+    maxLength: 200,
     animate: "scale"
   });
 }

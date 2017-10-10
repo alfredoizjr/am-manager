@@ -50,10 +50,10 @@
       </div>
   </div>
 
-  <button [disabled]="f.invalid" type="submit" class="btn btn-primary">Submit</button>
+  <button [disabled]="f.invalid" type="submit" class="btn btn-primary">Sing Up</button>
 </form>
 <!-- ***************************************************** -->
-<!-- ***the template is call if no the main registration **-->
+<!-- ***the template is calling if no the main registration **-->
 <!-- ***************************************************** -->
 <ng-template #notMain>
   <form #f="ngForm" (ngSubmit)="updateUser(f.value)">
@@ -83,6 +83,6 @@
         <p *ngIf="ext.errors?.required">Ext is required</p>
       </div>
     </div>
-    <button [disabled]="f.invalid" type="submit" class="btn btn-primary">Submit</button>
+    <button [disabled]="f.invalid" type="submit" class="btn btn-primary">Update</button>
   </form>
 </ng-template>

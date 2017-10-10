@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy,ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy} from '@angular/core';
 import { ISubscription } from "rxjs/Subscription";
 import { Router } from '@angular/router';
 //services
@@ -12,12 +12,11 @@ import { NotificationService } from './../../services/notification.service';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit, OnDestroy {
-  @ViewChild('myInput') myInputVariable: any;
   subcription: ISubscription;
   userProfile: any;
   uid: string;
 
-  constructor(private userServ: UserService, private auth: AuthService, private router: Router,public notifServ:NotificationService) {
+  constructor(private userServ: UserService, private auth: AuthService, private router: Router) {
 
   }
 
@@ -34,23 +33,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     });
   }
 
-  onFileSelection(event) {
-    const filelist: FileList = event.target.files;
-    
-    if (filelist.length > 0) {
-      let file: File = filelist[0];
-      this.userServ.uploadAvatarUser(file,this.uid)
-        .then(data => {
-          this.userServ.userSaveAvatar(this.uid,data['fileUrl']);
-          if(this.userServ.progress === 100){
-             this.notifServ.success('the picture profile was add success!');
-             this.myInputVariable.nativeElement.value = "";
-          }
-        }).catch(err => {
-          console.log('errores', err);
-        });
-    }
-  }
+
 
 
   ngOnDestroy() {

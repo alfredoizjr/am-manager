@@ -6,37 +6,41 @@
   </button>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-   
-      <ul *ngIf="(auth.user$ | async)" class="navbar-nav mr-auto">
-        <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link" [routerLink]="['dashboard']"><i class="fa fa-dashcube" aria-hidden="true"></i> Dasboard</a>
-        </li>
-      </ul>
- 
+
+    <ul *ngIf="(auth.user$ | async)" class="navbar-nav mr-auto">
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['dashboard']"><i class="fa fa-dashcube" aria-hidden="true"></i> Dasboard</a>
+      </li>
+    </ul>
+
     <ul *ngIf="auth.user$ | async as user; else out" class="navbar-nav ml-auto">
-        <li ngbDropdown class="nav-item dropdown">
-            <a  ngbDropdownToggle class="active nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <li ngbDropdown class="nav-item dropdown">
+        <a ngbDropdownToggle class="active nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false">
                 <i class="fa fa-user" aria-hidden="true"></i> {{user.email}}
             </a>
-            <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <a class="dropdown-item" [routerLink]="['profile']">Your Profile</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-          </li>
-        <li class="nav-item active">
-            <button class="btn-link nav-link" (click)="logout()" type="button"><i class="fa fa-power-off" aria-hidden="true"></i> Logout</button>
-          </li>
+        <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" [routerLink]="['profile']">Your Profile</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+      </li>
+      <li class="nav-item active">
+        <button class="btn-link nav-link" (click)="logout()" type="button"><i class="fa fa-power-off" aria-hidden="true"></i> Logout</button>
+      </li>
+    </ul>
+    <ng-template #out>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item " routerLinkActive="active">
+          <a class="nav-link" routerLink="login">Login</a>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" routerLink="sing-up">Sing Up as a Menber</a>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" routerLink="sing-up-clients">Sing Up as a Client</a>
+        </li>
       </ul>
-      <ng-template #out>
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item " routerLinkActive="active">
-                <a class="nav-link" routerLink="login">Login</a>
-              </li>
-              <li class="nav-item" routerLinkActive="active">
-                <a class="nav-link" routerLink="sing-in">Sing In</a>
-              </li>
-        </ul>
-  </ng-template>
+    </ng-template>
   </div>
 </nav>

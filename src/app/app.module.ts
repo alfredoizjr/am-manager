@@ -27,6 +27,11 @@ import { DashboardComponent } from './private/dashboard/dashboard.component';
 import { ProfileComponent } from './private/profile/profile.component';
 import { NoFoundComponent } from './no-found/no-found.component';
 import { RegisterFormComponent } from './shared/register-form/register-form.component';
+import { LoginFormComponent } from './shared/login-form/login-form.component';
+import { UploadAvatarComponent } from './shared/upload-avatar/upload-avatar.component';
+import { SingUpClientsComponent } from './auth/sing-up-clients/sing-up-clients.component';
+import { RegisterClientsFormComponent } from './shared/register-clients-form/register-clients-form.component';
+
 
 
 @NgModule({
@@ -40,6 +45,10 @@ import { RegisterFormComponent } from './shared/register-form/register-form.comp
     ProfileComponent,
     NoFoundComponent,
     RegisterFormComponent,
+    LoginFormComponent,
+    UploadAvatarComponent,
+    SingUpClientsComponent,
+    RegisterClientsFormComponent,
   
   ],
   imports: [

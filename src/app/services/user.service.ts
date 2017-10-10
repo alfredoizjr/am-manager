@@ -11,7 +11,7 @@ export class UserService {
   userDoc: AngularFirestoreDocument<any>
   userCollection: AngularFirestoreCollection<any[]>
   user: Observable<any[]>
-  public progress: any;
+  public progress: any = 0;
   constructor(private afDb: AngularFirestore) {
 
   }

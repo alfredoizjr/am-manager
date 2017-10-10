@@ -1,8 +1,8 @@
-div .alert {
-   margin-top: 10px; 
-}
-
 .secondary-text{
    color: #ACACAC;
    font-size: 1rem; 
 }
+
+.separator{
+    margin-bottom: 5px;  
+  }
