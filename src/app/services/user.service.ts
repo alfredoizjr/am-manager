@@ -22,7 +22,7 @@ user:Observable<any[]>
       email: user.email,
       singInData: new Date().toString(),
       position: user.position,
-      phone: 9547091318,
+      phone: '(954) 709-1318',
       ext:  user.ext,
       role: role 
     })

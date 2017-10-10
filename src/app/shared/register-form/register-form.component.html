@@ -42,11 +42,11 @@
    <!-- /field ext -->
   <div *ngIf="mainRegistration" class="form-group">
     <label for="exampleInputPassword1">Password</label>
-    <input name="password" #password="ngModel" ngModel type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" [min]="6" required>
+    <input name="password" #password="ngModel" ngModel type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" [minlength]="6" required>
 
     <div *ngIf="password.touched && password.invalid" class="alert alert-danger">
         <p *ngIf="password.errors?.required">Password is required</p>
-        <p *ngIf="password.errors?.min">Min 6 character</p>
+        <p *ngIf="password.errors?.minlength">Min 6 character</p>
       </div>
   </div>
 
@@ -59,18 +59,30 @@
   <form #f="ngForm" (ngSubmit)="updateUser(f.value)">
     <div class="form-group">
       <label for="fullname">Full Name</label>
-      <input name="fullname" [(ngModel)]="userData.fullname" type="text" class="form-control" placeholder="Enter Full Name">
+      <input name="fullname" #fullname="ngModel" [(ngModel)]="userData.fullname" type="text" class="form-control" placeholder="Enter Full Name" required>
+
+      <div *ngIf="fullname.touched && fullname.invalid" class="alert alert-danger">
+        <p *ngIf="fullname.errors?.required">Fullname is required</p>
+      </div>
     </div>
 
     <div class="form-group">
       <label for="position">Postion</label>
-      <input name="position" [(ngModel)]="userData.position" type="position" class="form-control" id="position" placeholder="Position">
+      <input name="position" #position="ngModel" [(ngModel)]="userData.position" type="position" class="form-control" id="position" placeholder="Position" required>
+
+      <div *ngIf="position.touched && position.invalid" class="alert alert-danger">
+        <p *ngIf="position.errors?.required">Position is required</p>
+      </div>
     </div>
 
     <div class="form-group">
-      <label for="ext">Number</label>
-      <input name="ext" [(ngModel)]="userData.ext" type="number" class="form-control" id="ext" placeholder="ext">
+      <label for="ext">Ext</label>
+      <input name="ext" #ext="ngModel" [(ngModel)]="userData.ext" type="number" class="form-control" id="ext" placeholder="ext" number required>
+
+      <div *ngIf="ext.touched && ext.invalid" class="alert alert-danger">
+        <p *ngIf="ext.errors?.required">Ext is required</p>
+      </div>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button [disabled]="f.invalid" type="submit" class="btn btn-primary">Submit</button>
   </form>
 </ng-template>

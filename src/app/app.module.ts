@@ -28,6 +28,7 @@ import { ProfileComponent } from './private/profile/profile.component';
 import { NoFoundComponent } from './no-found/no-found.component';
 import { RegisterFormComponent } from './shared/register-form/register-form.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,7 +39,8 @@ import { RegisterFormComponent } from './shared/register-form/register-form.comp
     DashboardComponent,
     ProfileComponent,
     NoFoundComponent,
-    RegisterFormComponent
+    RegisterFormComponent,
+  
   ],
   imports: [
     NgbModule.forRoot(),
