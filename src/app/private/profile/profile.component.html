@@ -3,11 +3,15 @@
     <div class="card">
       <div class="card-body">
         <div class="text-center">
-          <img class="img-circle" style="width: 150px;" src="assets/img/profile.png" alt="Generic placeholder image">
+          
+          <img *ngIf="userProfile?.avatarUrl; else defaultImg" class="rounded-circle" style="width: 150px; height: 150px;" [src]="userProfile?.avatarUrl">
+          <ng-template #defaultImg>
+            <img class="img-circle" style="width: 150px; height: 150px;" src="assets/img/profile.png" alt="Generic placeholder image">
+          </ng-template>
         </div>
         <blockquote class="blockquote text-center">
           <p class="mb-0">{{userProfile?.fullname}}</p>
-          <footer class="blockquote-footer">{{userProfile?.position}}</footer>
+          <p class="secondary-text">{{userProfile?.position}}</p>
         </blockquote>
         <hr>
         <p>
@@ -83,6 +87,13 @@
                 <br>
               <p class="text-muted">Edit Your proflie</p>
               <hr>
+              <div class="progress">
+                <div [ngStyle]="{ 'width': userServ.progress + '%' }" class="progress-bar progress-bar-striped bg-success"  aria-valuemax="100"></div>
+              </div>
+              <div class="alert alert-success">
+                <input type="file" (change)="onFileSelection($event)" #myInput placeholder="Upload a file" accept=".png, .jpeg, .jpg">
+             </div>
+             <br>
               <!-- form edit profile -->
                 <app-register-form [uid]="uid" [user-data]="userProfile" [main-registration]="false"></app-register-form>
                <!-- form edit profile -->
