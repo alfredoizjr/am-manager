@@ -12,7 +12,7 @@ import { ProfileComponent } from './../private/profile/profile.component';
 import { SingUpClientsComponent } from './../auth/sing-up-clients/sing-up-clients.component';
 
 const routes: Routes = [
-  {path: '',component: LoginComponent},
+  {path: '',component: DashboardComponent},
   {path: 'login',component: LoginComponent},
   {path: 'sing-up',component: SingInComponent},
   {path: 'sing-up-clients',component:SingUpClientsComponent},

@@ -34,7 +34,7 @@ export class AuthService {
           this.notifServ.success("The register was succes")
         }).catch((err)=>{
           this.notifServ.error(err.message);
-          
+          console.log(err);
         })
   }
 
@@ -70,4 +70,5 @@ export class AuthService {
   profileUser() {
     return this.afAuth.authState;
   }
+
 }

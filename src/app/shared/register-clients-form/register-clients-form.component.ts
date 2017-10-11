@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 //services
 import { AuthService } from './../../services/auth.service';
+import { ClientService } from './../../services/client.service';
 
 @Component({
   selector: 'register-clients-form',
@@ -9,13 +10,24 @@ import { AuthService } from './../../services/auth.service';
 })
 export class RegisterClientsFormComponent implements OnInit {
 
-  constructor(private authServ:AuthService) { }
+  @Input('user-data') userData: object = {};
+  @Input('is-main-form') isMain: boolean = true;
+  @Input('user-id') uid: string = null;
+  constructor(private authServ: AuthService, private clientServ: ClientService) { }
 
   ngOnInit() {
+    
   }
 
-  registerClient(form){
-      this.authServ.registerClient(form);
-  }
+ updateClient(form){
+  
+  this.clientServ.updateClient(form, this.uid);
+  
+}
+
+  registerClient(form) {
+    
+    this.authServ.registerClient(form);
+}
 
 }

@@ -83,6 +83,9 @@
         <p *ngIf="ext.errors?.required">Ext is required</p>
       </div>
     </div>
-    <button [disabled]="f.invalid" type="submit" class="btn btn-primary">Update</button>
+    <div class="text-right">
+      <button [disabled]="f.invalid" type="submit" class="btn btn-success">Update Information</button>
+    </div>
+    
   </form>
 </ng-template>

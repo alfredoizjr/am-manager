@@ -32,6 +32,8 @@ import { LoginFormComponent } from './shared/login-form/login-form.component';
 import { UploadAvatarComponent } from './shared/upload-avatar/upload-avatar.component';
 import { SingUpClientsComponent } from './auth/sing-up-clients/sing-up-clients.component';
 import { RegisterClientsFormComponent } from './shared/register-clients-form/register-clients-form.component';
+import { ContentMainUserComponent } from './shared/content-main-user/content-main-user.component';
+import { ContentMainClientComponent } from './shared/content-main-client/content-main-client.component';
 
 
 
@@ -50,6 +52,8 @@ import { RegisterClientsFormComponent } from './shared/register-clients-form/reg
     UploadAvatarComponent,
     SingUpClientsComponent,
     RegisterClientsFormComponent,
+    ContentMainUserComponent,
+    ContentMainClientComponent,
   
   ],
   imports: [

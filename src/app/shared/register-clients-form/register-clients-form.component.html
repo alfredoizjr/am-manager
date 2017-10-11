@@ -1,5 +1,5 @@
 <hr>
-<form #f="ngForm" (ngSubmit)="registerClient(f.value)">
+<form *ngIf="isMain; else noMaint" #f="ngForm" (ngSubmit)="registerClient(f.value)">
   <div class="row">
     <div class="col-md-6">
       <!-- Full name -->
@@ -13,10 +13,10 @@
       </div>
     </div>
     <!-- /Full name -->
-    <div class="col-md-6">
+    <div *ngIf="isMain" class="col-md-6">
       <!-- email field -->
       <div class="form-group">
-        <label for="exampleInputEmail1">Email address</label>
+        <label for="email">Email address</label>
         <input name="email" ngModel #email="ngModel" type="email" class="form-control" placeholder="Enter email" email required>
 
         <div *ngIf="email.touched && email.invalid" class="alert alert-danger">
@@ -109,7 +109,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-6">
+    <div *ngIf="isMain" class="col-md-6">
       <!-- password Phone  -->
       <div class="form-group">
         <label for="exampleInputPassword1">Password</label>
@@ -123,7 +123,115 @@
       </div>
     </div>
     <div class="col-md-12 text-right">
-      <button [disabled]="f.invalid" type="submit" class="btn btn-primary">Sing Up</button>
+      <button *ngIf="isMain" [disabled]="f.invalid" type="submit" class="btn btn-primary">Sing Up</button>
+      <button *ngIf="!isMain" [disabled]="f.invalid" type="submit" class="btn btn-success">Update Information</button>
     </div>
   </div>
 </form>
+<!-- ***************************************************** -->
+<!-- ***the template is calling if no the main registration **-->
+<!-- ***************************************************** -->
+<ng-template #noMaint>
+  <form #f="ngForm" (ngSubmit)="updateClient(f.value)">
+    <div class="row">
+      <div class="col-md-6">
+        <!-- Full name -->
+        <div class="form-group">
+          <label for="fullname">Full Name</label>
+          <input name="fullname" [(ngModel)]="userData.fullname" #fullname="ngModel" type="text" class="form-control" placeholder="Enter Full Name" required>
+  
+          <div *ngIf="fullname.touched && fullname.invalid" class="alert alert-danger">
+            <p *ngIf="fullname.errors?.required">Fullname is required</p>
+          </div>
+        </div>
+      </div>
+      <!-- /Full name -->
+      <div class="col-md-6">
+        <!-- business field-->
+        <div class="form-group">
+          <label for="position">Business Name</label>
+          <input name="business" [(ngModel)]="userData.business" #business="ngModel" type="text" class="form-control" id="position" placeholder="Bussiness Name"
+            required>
+  
+          <div *ngIf="business.touched && business.invalid" class="alert alert-danger">
+            <p *ngIf="business.errors?.required">business is required</p>
+          </div>
+        </div>
+        <!--/ business field-->
+      </div>
+      <div class="col-md-6">
+        <!-- business Type-->
+        <div class="form-group">
+          <label for="position">Business type</label>
+          <input name="businessType" [(ngModel)]="userData.businessType" #businessType="ngModel" type="text" class="form-control" id="position" placeholder="Business Type"
+            required>
+  
+          <div *ngIf="businessType.touched && businessType.invalid" class="alert alert-danger">
+            <p *ngIf="businessType.errors?.required">Business Type</p>
+          </div>
+        </div>
+        <!--/ business Type-->
+      </div>
+      <div class="col-md-6">
+        <!-- field ext -->
+        <div class="form-group">
+          <label for="Primary">Primary phone</label>
+          <input name="primary" #primary="ngModel" [(ngModel)]="userData.phone" type="number" class="form-control" id="Primary" placeholder="Primary Phone"
+            required number>
+  
+          <div *ngIf="primary.touched && primary.invalid" class="alert alert-danger">
+            <p *ngIf="primary.errors?.required">Primary Phone is required</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <!-- Secondary Phone -->
+        <div class="form-group">
+          <label for="seondary">Secondary phone</label>
+          <input name="secondary" [(ngModel)]="userData.secondary" type="number" class="form-control" id="secondary" placeholder="secondary Phone" number>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <!-- field address -->
+        <div class="form-group">
+          <label for="address">Address</label>
+          <input name="address" #address="ngModel" [(ngModel)]="userData.address" type="text" class="form-control" id="address" placeholder="Address"
+            required>
+  
+          <div *ngIf="address.touched && address.invalid" class="alert alert-danger">
+            <p *ngIf="address.errors?.required">Address is required</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <!-- field address -->
+        <div class="form-group">
+          <label for="zipcode">Zip code</label>
+          <input name="zipcode" #zipcode="ngModel" [(ngModel)]="userData.zipcode" type="number" class="form-control" id="zipcode" placeholder="Zip Code"
+            required number>
+  
+          <div *ngIf="zipcode.touched && zipcode.invalid" class="alert alert-danger">
+            <p *ngIf="zipcode.errors?.required">Zip Code is Required</p>
+            <p *ngIf="zipcode.errors?.number">Has to be Number</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <!-- position   -->
+        <div class="form-group">
+          <label for="title">title</label>
+          <input name="position" #position="ngModel" [(ngModel)]="userData.position" type="text" class="form-control" id="title" placeholder="Title"
+             required >
+  
+          <div *ngIf="position.touched && position.invalid" class="alert alert-danger">
+            <p *ngIf="position.errors?.required">Title is required</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 text-right">
+         <button  [disabled]="f.invalid" type="submit" class="btn btn-success">Update Information</button>
+      </div>
+    </div>
+  </form>
+
+</ng-template>

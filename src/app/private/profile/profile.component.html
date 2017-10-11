@@ -1,4 +1,14 @@
 <div class="row">
+  <div class="col-md-12">
+      <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a routerLink="/">Dashboard</a>
+          </li>
+          <li class="breadcrumb-item active">
+             Profile
+          </li>
+        </ol>
+  </div>
   <div class="col-md-4">
     <div class="card">
       <div class="card-body">
@@ -92,8 +102,11 @@
               <upload-avatar [user-id]="uid"></upload-avatar>
              <br>
               <!-- form edit profile -->
-                <app-register-form [uid]="uid" [user-data]="userProfile" [main-registration]="false"></app-register-form>
+                <app-register-form *ngIf="userProfile?.role != 'client';else clientForm" [uid]="uid" [user-data]="userProfile" [main-registration]="false"></app-register-form>
                <!-- form edit profile -->
+               <ng-template #clientForm>
+                <register-clients-form [user-data]="userProfile" [is-main-form]="false" [user-id]="uid"></register-clients-form>
+               </ng-template>
             </ng-template>
           </ngb-tab>
         </ngb-tabset>

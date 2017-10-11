@@ -1,0 +1,29 @@
+<div class="row">
+  <div class="col-md-4">
+    <div class="card">
+        <img class="card-img-top" [src]="data?.avatarUrl" alt="Card image cap">
+      <div class="text-center card-body">
+        <h4>{{data?.fullname}}</h4>
+        <p class="card-text text-muted">{{data?.position}}</p>
+        <hr>
+        <a routerLink="/profile" class="btn btn-success">My Profile</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card card-success">
+      <div class="card-body">
+          <h4>Invoice</h4>
+          <p>Invoice Date: <i class="fa fa-calendar" aria-hidden="true"></i> 10-0ct-2017 </p>
+          <p>Do Date: <i class="fa fa-calendar" aria-hidden="true"></i> 10-0ct-2018 </p>
+          <hr>
+          <h4>Total $2789.00 </h4>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-body"></div>
+    </div>
+  </div>
+</div>

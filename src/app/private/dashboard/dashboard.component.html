@@ -1,3 +1,8 @@
-<p>
-  dashboard works!
-</p>
+
+  <ng-template *ngIf="userProfile.role != 'client'; else panelC">
+      user worker
+  </ng-template>
+  <ng-template #panelC>
+    <content-main-client [data-info]="userProfile"></content-main-client>
+  </ng-template>
+
