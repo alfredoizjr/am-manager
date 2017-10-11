@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+//services
+import { AuthService } from './../../services/auth.service';
 
 @Component({
   selector: 'register-clients-form',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegisterClientsFormComponent implements OnInit {
 
-  constructor() { }
+  constructor(private authServ:AuthService) { }
 
   ngOnInit() {
+  }
+
+  registerClient(form){
+      this.authServ.registerClient(form);
   }
 
 }

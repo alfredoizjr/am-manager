@@ -1,80 +1,129 @@
-<form  #f="ngForm" (ngSubmit)="registerUser(f.value)">
+<hr>
+<form #f="ngForm" (ngSubmit)="registerClient(f.value)">
   <div class="row">
     <div class="col-md-6">
-        <!-- Full name -->
-    <div class="form-group">
+      <!-- Full name -->
+      <div class="form-group">
         <label for="fullname">Full Name</label>
         <input name="fullname" ngModel #fullname="ngModel" type="text" class="form-control" placeholder="Enter Full Name" required>
-    
+
         <div *ngIf="fullname.touched && fullname.invalid" class="alert alert-danger">
-            <p *ngIf="fullname.errors?.required">Fullname is required</p>
-          </div>
+          <p *ngIf="fullname.errors?.required">Fullname is required</p>
         </div>
+      </div>
     </div>
     <!-- /Full name -->
     <div class="col-md-6">
-    <!-- email field -->
-    <div class="form-group">
-      <label for="exampleInputEmail1">Email address</label>
-      <input name="email" ngModel #email="ngModel" type="email" class="form-control"  placeholder="Enter email" email required>
-  
-      <div *ngIf="email.touched && email.invalid" class="alert alert-danger">
-        <p *ngIf="email.errors?.required">Email is required</p>
-        <p *ngIf="email.errors?.email">Email Invalid</p>
+      <!-- email field -->
+      <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input name="email" ngModel #email="ngModel" type="email" class="form-control" placeholder="Enter email" email required>
+
+        <div *ngIf="email.touched && email.invalid" class="alert alert-danger">
+          <p *ngIf="email.errors?.required">Email is required</p>
+          <p *ngIf="email.errors?.email">Email Invalid</p>
+        </div>
       </div>
     </div>
-  </div>
-  
-  <!-- /email field -->
-  <div class="col-md-6">
-  <!-- business field-->
-    <div class="form-group">
-      <label for="position">Business Name</label>
-      <input name="business"  ngModel #business="ngModel" type="text" class="form-control" id="position" placeholder="Bussiness Name" required>
-  
-      <div *ngIf="business.touched && business.invalid" class="alert alert-danger">
+
+    <!-- /email field -->
+    <div class="col-md-6">
+      <!-- business field-->
+      <div class="form-group">
+        <label for="position">Business Name</label>
+        <input name="business" ngModel #business="ngModel" type="text" class="form-control" id="position" placeholder="Bussiness Name"
+          required>
+
+        <div *ngIf="business.touched && business.invalid" class="alert alert-danger">
           <p *ngIf="business.errors?.required">business is required</p>
         </div>
-    </div>
-    <!--/ business field-->
-  </div>
-  <div class="col-md-6">
-      <!-- business field-->
-        <div class="form-group">
-          <label for="position">Business type</label>
-          <input name="businessType"  ngModel #businessType="ngModel" type="text" class="form-control" id="position" placeholder="Bussiness Name" required>
-      
-          <div *ngIf="businessType.touched && businessType.invalid" class="alert alert-danger">
-              <p *ngIf="businessType.errors?.required">Business Type</p>
-            </div>
-        </div>
-        <!--/ business field-->
       </div>
-  <div class="col-md-6">
-    <!-- field ext -->
-    <div class="form-group">
-      <label for="ext">Primary phone</label>
-      <input name="primary" #primary="ngModel" ngModel type="number" class="form-control" id="ext" placeholder="Primary Phone" required number >
-     
-      <div *ngIf="primary.touched && primary.invalid" class="alert alert-danger">
-          <p *ngIf="primary.errors?.required">Primary Phone is required</p>
-      </div>
-    </div>
+      <!--/ business field-->
     </div>
     <div class="col-md-6">
-     <!-- /field ext -->
-    <div  class="form-group">
-      <label for="exampleInputPassword1">Password</label>
-      <input name="password" #password="ngModel" ngModel type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" [minlength]="6" required>
-  
-      <div *ngIf="password.touched && password.invalid" class="alert alert-danger">
+      <!-- business Type-->
+      <div class="form-group">
+        <label for="position">Business type</label>
+        <input name="businessType" ngModel #businessType="ngModel" type="text" class="form-control" id="position" placeholder="Business Type"
+          required>
+
+        <div *ngIf="businessType.touched && businessType.invalid" class="alert alert-danger">
+          <p *ngIf="businessType.errors?.required">Business Type</p>
+        </div>
+      </div>
+      <!--/ business Type-->
+    </div>
+    <div class="col-md-6">
+      <!-- field ext -->
+      <div class="form-group">
+        <label for="Primary">Primary phone</label>
+        <input name="primary" #primary="ngModel" ngModel type="number" class="form-control" id="Primary" placeholder="Primary Phone"
+          required number>
+
+        <div *ngIf="primary.touched && primary.invalid" class="alert alert-danger">
+          <p *ngIf="primary.errors?.required">Primary Phone is required</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <!-- Secondary Phone -->
+      <div class="form-group">
+        <label for="seondary">Secondary phone</label>
+        <input name="secondary" ngModel type="number" class="form-control" id="secondary" placeholder="secondary Phone" number>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <!-- field address -->
+      <div class="form-group">
+        <label for="address">Address</label>
+        <input name="address" #address="ngModel" ngModel type="text" class="form-control" id="address" placeholder="Address"
+          required>
+
+        <div *ngIf="address.touched && address.invalid" class="alert alert-danger">
+          <p *ngIf="address.errors?.required">Address is required</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <!-- field address -->
+      <div class="form-group">
+        <label for="zipcode">Zip code</label>
+        <input name="zipcode" #zipcode="ngModel" ngModel type="number" class="form-control" id="zipcode" placeholder="Zip Code"
+          required number>
+
+        <div *ngIf="zipcode.touched && zipcode.invalid" class="alert alert-danger">
+          <p *ngIf="zipcode.errors?.required">Zip Code is Required</p>
+          <p *ngIf="zipcode.errors?.number">Has to be Number</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <!-- position   -->
+      <div class="form-group">
+        <label for="title">title</label>
+        <input name="position" #position="ngModel" ngModel type="text" class="form-control" id="title" placeholder="Title"
+           required >
+
+        <div *ngIf="position.touched && position.invalid" class="alert alert-danger">
+          <p *ngIf="position.errors?.required">Title is required</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <!-- password Phone  -->
+      <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <input name="password" #password="ngModel" ngModel type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"
+          [minlength]="6" required >
+
+        <div *ngIf="password.touched && password.invalid" class="alert alert-danger">
           <p *ngIf="password.errors?.required">Password is required</p>
           <p *ngIf="password.errors?.minlength">Min 6 character</p>
         </div>
+      </div>
     </div>
-   </div>
-   <div class="col-md-12 text-left">
-    <button [disabled]="f.invalid" type="submit" class="btn btn-primary">Sing Up</button>
+    <div class="col-md-12 text-right">
+      <button [disabled]="f.invalid" type="submit" class="btn btn-primary">Sing Up</button>
+    </div>
   </div>
-  </div>
-  </form>
+</form>

@@ -6,6 +6,7 @@ import * as firebase from 'firebase/app';
 //services
 import { UserService } from './user.service';
 import { NotificationService } from './notification.service';
+import { ClientService } from './client.service';
 
 
 @Injectable()
@@ -13,9 +14,28 @@ export class AuthService {
 
   public user$: Observable<firebase.User>;
 
-  constructor(private afAuth: AngularFireAuth, private router: Router, private userServ: UserService, public notifServ: NotificationService) {
+  constructor(private afAuth: AngularFireAuth, 
+              private router: Router, 
+              private userServ: UserService, 
+              public notifServ: NotificationService,
+              private clientServ:ClientService
+            ) {
     this.user$ = this.afAuth.authState;
 
+  }
+
+  registerClient(form){
+  
+    this.afAuth.auth.createUserWithEmailAndPassword(form.email,form.password)
+        .then(data=>{
+          console.log("success");
+          this.clientServ.saveClientData(form,data.uid);
+          this.router.navigate(['dashboard']);
+          this.notifServ.success("The register was succes")
+        }).catch((err)=>{
+          this.notifServ.error(err.message);
+          
+        })
   }
 
   registerUser(form) {

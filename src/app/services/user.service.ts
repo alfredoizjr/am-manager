@@ -34,7 +34,7 @@ export class UserService {
     return this.user = this.userCollection.valueChanges();
   }
 
-  getCurrentProfileUser(uid) {
+  getCurrentProfile(uid) {
     let userDoc = this.afDb.doc('user/' + uid);
     return userDoc.valueChanges();
   }

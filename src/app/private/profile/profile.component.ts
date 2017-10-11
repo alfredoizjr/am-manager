@@ -24,7 +24,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
     this.subcription = this.auth.user$.subscribe(user => {
       if (!user) return this.router.navigate(['login']);
-      this.userServ.getCurrentProfileUser(user.uid).subscribe(dataUser => {
+      this.userServ.getCurrentProfile(user.uid).subscribe(dataUser => {
         this.userProfile = dataUser;
         this.uid = user.uid;
 

@@ -15,6 +15,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { UserService } from './services/user.service';
 import { AuthService } from './services/auth.service';
 import { NotificationService } from './services/notification.service';
+import { ClientService } from './services/client.service';
 //guards
 import { IsLoginGuard } from './guards/is-login.guard';
 //componets
@@ -63,7 +64,7 @@ import { RegisterClientsFormComponent } from './shared/register-clients-form/reg
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
     FormsModule // forms
   ],
-  providers: [AuthService,IsLoginGuard,UserService,NotificationService],
+  providers: [AuthService,IsLoginGuard,UserService,NotificationService,ClientService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
