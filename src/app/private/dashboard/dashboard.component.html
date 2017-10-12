@@ -1,8 +1,8 @@
-<ng-template *ngIf="userProfile.role != 'client'; else panelC">
+<div *ngIf="userProfile.role != 'client'; else panelC">
   <div @fade>
-    user worker
+    <content-main-user [data-info]="userProfile" [data-clients]="clients"></content-main-user>
   </div>
-</ng-template>
+</div>
 <ng-template #panelC>
   <div @fade>
     <content-main-client [data-info]="userProfile"></content-main-client>

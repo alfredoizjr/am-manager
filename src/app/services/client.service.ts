@@ -10,7 +10,8 @@ import { NotificationService } from './notification.service';
 @Injectable()
 export class ClientService {
   clientDoc: AngularFirestoreDocument<any>
-  
+  clientsCollection:AngularFirestoreCollection<Client>
+  clients:Observable<Client[]>
  
   constructor(private afDb: AngularFirestore, public notifServ: NotificationService) { }
 
@@ -28,6 +29,7 @@ export class ClientService {
       position: form.position,
       address: form.address,
       zipcode: form.zipcode,
+      uid:uid
     });
 
   }
@@ -56,5 +58,11 @@ export class ClientService {
   }
 
 
+  getClients(){
+    this.clientsCollection = this.afDb.collection('user',ref=>{
+      return ref.where('role','==', 'client');
+    })
+     return this.clients = this.clientsCollection.valueChanges();
+  }
 
 }

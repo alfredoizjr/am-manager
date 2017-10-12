@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 //services
 import { AuthService } from './../../services/auth.service';
 import { UserService } from './../../services/user.service';
+import { ClientService } from './../../services/client.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,29 +19,29 @@ import { UserService } from './../../services/user.service';
 export class DashboardComponent implements OnInit, OnDestroy {
 
   userProfile: object = {};
-  chekUser: ISubscription;
-  constructor(private auth: AuthService, private router: Router, private userServ: UserService) { }
+  subcribe: ISubscription;
+  clients:any;
+  constructor(private auth: AuthService, private router: Router, private userServ: UserService,private clientServ:ClientService) { }
 
   ngOnInit() {
-    this.chekUser = this.auth.user$.subscribe(user => {
+    this.subcribe = this.auth.user$.subscribe(user => {
       if (!user) {
         this.router.navigate(['login']);
         return false;
       }
 
       this.userServ.getCurrentProfile(user.uid).subscribe((userData) => {
-
-        this.userProfile = userData;
-
-      });
-
+         this.userProfile = userData;
+       });
     });
+
+    this.clients = this.clientServ.getClients()
   }
 
   ngOnDestroy() {
     //Called once, before the instance is destroyed.
     //Add 'implements OnDestroy' to the class.
-    this.chekUser.unsubscribe();
+    this.subcribe.unsubscribe();
 
   }
 

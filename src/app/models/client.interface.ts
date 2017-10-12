@@ -9,5 +9,6 @@ export interface Client{
     secondary?:number;
     position?:string;
     role?:string;
+    uid?:string;
 
 }

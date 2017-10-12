@@ -1,3 +1,36 @@
-<p>
-  content-main-user works!
-</p>
+<div class="row">
+  <div class="col-md-4">
+    <div class="card">
+      <img class="card-img-top" [src]="data?.avatarUrl" alt="Card image cap">
+      <div class="text-center card-body">
+        <h4>{{data?.fullname}}</h4>
+        <p class="card-text text-muted">{{data?.position}}</p>
+        <hr>
+        <a routerLink="/profile" class="btn btn-success">My Profile</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md">
+    <div class="card card-success">
+      <div class="card-body">
+        <h4>Clients</h4>
+         <table class="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th>Full Name</th>
+                <th>Title</th>
+                <th>Primary Phone</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let client of dataClients | async" (click)="getDetailClient(client.uid)">
+                <td>{{client?.fullname}}</td>
+                <td>{{client?.position}}</td>
+                <td>{{client?.phone}}</td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+    </div>
+  </div>
+</div>
