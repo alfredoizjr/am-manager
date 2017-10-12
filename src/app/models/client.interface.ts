@@ -8,5 +8,6 @@ export interface Client{
     primary?:number;
     secondary?:number;
     position?:string;
+    role?:string;
 
 }

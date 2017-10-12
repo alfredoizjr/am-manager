@@ -6,6 +6,7 @@ import { AppRouterRoutingModule } from './app-router/app-router-routing.module';
 import {FormsModule} from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { CustomFormsModule } from 'ng2-validation'
+
 //firebase
 import { AngularFireModule } from 'angularfire2';
 import { environment } from '../environments/environment';
@@ -18,6 +19,7 @@ import { NotificationService } from './services/notification.service';
 import { ClientService } from './services/client.service';
 //guards
 import { IsLoginGuard } from './guards/is-login.guard';
+import { AdminGuard } from './guards/admin-guard.guard';
 //componets
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -34,6 +36,7 @@ import { SingUpClientsComponent } from './auth/sing-up-clients/sing-up-clients.c
 import { RegisterClientsFormComponent } from './shared/register-clients-form/register-clients-form.component';
 import { ContentMainUserComponent } from './shared/content-main-user/content-main-user.component';
 import { ContentMainClientComponent } from './shared/content-main-client/content-main-client.component';
+import { EnvoicesComponent } from './admin/envoices/envoices.component';
 
 
 
@@ -54,6 +57,7 @@ import { ContentMainClientComponent } from './shared/content-main-client/content
     RegisterClientsFormComponent,
     ContentMainUserComponent,
     ContentMainClientComponent,
+    EnvoicesComponent,
   
   ],
   imports: [
@@ -68,7 +72,7 @@ import { ContentMainClientComponent } from './shared/content-main-client/content
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
     FormsModule // forms
   ],
-  providers: [AuthService,IsLoginGuard,UserService,NotificationService,ClientService],
+  providers: [AuthService,IsLoginGuard,UserService,NotificationService,ClientService,AdminGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

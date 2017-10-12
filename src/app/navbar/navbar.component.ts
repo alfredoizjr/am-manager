@@ -1,7 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { ISubscription } from 'rxjs/Subscription';
+import { Component, OnInit} from '@angular/core';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/switchMap';
 //services
 import { AuthService } from './../services/auth.service';
-import { AngularFireAuth } from 'angularfire2/auth';
+import { UserService } from './../services/user.service';
 
 @Component({
   selector: 'app-navbar',
@@ -10,16 +14,26 @@ import { AngularFireAuth } from 'angularfire2/auth';
 })
 export class NavbarComponent implements OnInit {
 
-constructor(public auth:AuthService) { }
+  isAdmin:any;
+
+
+constructor(public auth:AuthService,private userServ:UserService) { }
 
   ngOnInit() {
+     this.auth.user$.subscribe(user => {
+       if(user){
+        this.userServ.getCurrentProfile(user.uid).subscribe(dataUser => {
+          this.isAdmin = dataUser;
+        });
+       }
+     });
+
     
-  }
+    
+ }
 
-  
-
-  logout(){
+logout(){
     this.auth.logOutUser();
-    console.log('logout');
   }
+
 }

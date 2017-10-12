@@ -1,3 +1,4 @@
+import { fade } from './../../animations';
 import { Observable } from 'rxjs/Observable';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ISubscription } from "rxjs/Subscription";
@@ -9,7 +10,10 @@ import { UserService } from './../../services/user.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  styleUrls: ['./dashboard.component.css'],
+  animations:[
+    fade
+  ]
 })
 export class DashboardComponent implements OnInit, OnDestroy {
 

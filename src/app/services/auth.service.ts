@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import  'rxjs/add/operator/map';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
@@ -7,14 +8,21 @@ import * as firebase from 'firebase/app';
 import { UserService } from './user.service';
 import { NotificationService } from './notification.service';
 import { ClientService } from './client.service';
+import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection } from 'angularfire2/firestore';
+import { User } from './../models/user.interfaces';
 
 
 @Injectable()
 export class AuthService {
+ 
+  userDoc:AngularFirestoreDocument<User>;
+  user:Observable<User>;
+  admin:boolean;
 
   public user$: Observable<firebase.User>;
 
-  constructor(private afAuth: AngularFireAuth, 
+  constructor(private afAuth: AngularFireAuth,
+              private db:AngularFirestore,
               private router: Router, 
               private userServ: UserService, 
               public notifServ: NotificationService,
@@ -71,4 +79,8 @@ export class AuthService {
     return this.afAuth.authState;
   }
 
+  currentUserIsAdmin(uid:string):Observable<User>{
+     this.userDoc = this.db.doc('user/'+ uid);
+     return this.user = this.userDoc.valueChanges();
+  }
 }

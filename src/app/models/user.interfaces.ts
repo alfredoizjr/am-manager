@@ -4,4 +4,7 @@ export interface User {
    uid?:string;
    position?:string; 
    ext?:number;
+   role?:string;
+   singInData?:any;
+   phone?:number
 }
