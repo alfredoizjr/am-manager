@@ -3,15 +3,17 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AdminGuard } from './../guards/admin-guard.guard';
 //componets
-import { HomeComponent } from './../home/home.component';
-import { LoginComponent } from './../auth/login/login.component';
-import { SingInComponent } from './../auth/sing-in/sing-in.component';
-import { NoFoundComponent } from './../no-found/no-found.component';
-import { EnvoicesComponent } from './../admin/envoices/envoices.component';
-//private
-import { DashboardComponent } from './../private/dashboard/dashboard.component';
-import { ProfileComponent } from './../private/profile/profile.component';
-import { SingUpClientsComponent } from './../auth/sing-up-clients/sing-up-clients.component';
+import {HomeComponent,
+        LoginComponent,
+        SingInComponent,
+        NoFoundComponent,
+        EnvoicesComponent,
+        ClientDetailComponent,
+        EnvoiceClientComponent,
+        DashboardComponent,//private
+        ProfileComponent,//private
+        SingUpClientsComponent//private
+      } from './../index-components'
 
 const routes: Routes = [
   {path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -21,6 +23,8 @@ const routes: Routes = [
   {path: 'dashboard',component: DashboardComponent,canActivate: [IsLoginGuard],data: {state: 'dashboard'}},
   {path: 'profile',component: ProfileComponent,canActivate: [IsLoginGuard],data: {state: 'profile'}},
   {path: 'envoices',component: EnvoicesComponent,canActivate: [IsLoginGuard , AdminGuard],data: {state: 'envoices'}},
+  {path: 'client-detail/:id',component: ClientDetailComponent,canActivate: [IsLoginGuard],data: {state: 'client-detail/:id'}},
+  {path: 'envoice-client/:id',component: EnvoiceClientComponent,canActivate: [IsLoginGuard,AdminGuard],data: {state: 'envoice-client/:id'}},
   {path: '**',component: NoFoundComponent},
 ];
 

@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { ISubscription } from 'rxjs/Subscription';
 import { fade } from './../../animations';
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
@@ -15,16 +16,13 @@ export class ContentMainUserComponent implements OnInit ,OnDestroy {
   @Input('data-info') data:object = {};
   @Input('data-clients') dataClients:any[]=[];
 
-  constructor() { }
+  constructor(private router:Router) { }
 
   ngOnInit() {
-   
-    
-    
-  }
+   }
 
   getDetailClient(uid){
-    console.log(uid);
+    this.router.navigate(['/client-detail',uid]);
   }
 
   ngOnDestroy() {

@@ -1,0 +1,23 @@
+<div class="row">
+    <div class="col-md-12">
+    <div class="card">
+      <div *ngIf="serv.services" class="card-body">
+        <h3 class="card-title text-center text-muted">Service</h3>
+        <hr>
+          <form (ngSubmit)="submitEnvoices(f.value)" #f="ngForm" >
+            <div class="row">
+              <div class="col-md-10">
+                  <select class="form-control" ngModel name="service">
+                    <option *ngFor="let service of serv.services | async" [value]="service.serviceName">{{service.serviceName}}</option>
+                  </select>
+              </div>
+              <div class="col-md-2 text-center align-middle">
+                  <button type="submit" class="btn btn-success  btn-block"><i class="fa fa-plus-square" aria-hidden="true"></i></button>
+              </div>
+            </div>
+           </form>
+      </div>
+    </div>
+  </div>
+  </div>
+  

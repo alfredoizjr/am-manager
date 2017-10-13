@@ -13,31 +13,37 @@ import { environment } from '../environments/environment';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 //services
-import { UserService } from './services/user.service';
-import { AuthService } from './services/auth.service';
-import { NotificationService } from './services/notification.service';
-import { ClientService } from './services/client.service';
+import {UserService,
+        AuthService,
+        ClientService,
+        EnvoicesService,
+        NotificationService,
+        ServiceService,
+        } from './services/index-service';
 //guards
 import { IsLoginGuard } from './guards/is-login.guard';
 import { AdminGuard } from './guards/admin-guard.guard';
 //componets
-import { AppComponent } from './app.component';
-import { NavbarComponent } from './navbar/navbar.component';
-import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './auth/login/login.component';
-import { SingInComponent } from './auth/sing-in/sing-in.component';
-import { DashboardComponent } from './private/dashboard/dashboard.component';
-import { ProfileComponent } from './private/profile/profile.component';
-import { NoFoundComponent } from './no-found/no-found.component';
-import { RegisterFormComponent } from './shared/register-form/register-form.component';
-import { LoginFormComponent } from './shared/login-form/login-form.component';
-import { UploadAvatarComponent } from './shared/upload-avatar/upload-avatar.component';
-import { SingUpClientsComponent } from './auth/sing-up-clients/sing-up-clients.component';
-import { RegisterClientsFormComponent } from './shared/register-clients-form/register-clients-form.component';
-import { ContentMainUserComponent } from './shared/content-main-user/content-main-user.component';
-import { ContentMainClientComponent } from './shared/content-main-client/content-main-client.component';
-import { EnvoicesComponent } from './admin/envoices/envoices.component';
-
+import {AppComponent,
+        NavbarComponent,
+        HomeComponent,
+        LoginComponent,
+        SingInComponent,
+        DashboardComponent,
+        ProfileComponent,
+        NoFoundComponent,
+        RegisterFormComponent,
+        LoginFormComponent,
+        UploadAvatarComponent,
+        SingUpClientsComponent,
+        RegisterClientsFormComponent,
+        ContentMainUserComponent,
+        ContentMainClientComponent,
+        EnvoicesComponent,
+        ClientDetailComponent,
+        DataTableComponent
+       } from './index-components';
+import { EnvoiceClientComponent } from './admin/envoice-client/envoice-client.component'
 
 
 @NgModule({
@@ -58,6 +64,9 @@ import { EnvoicesComponent } from './admin/envoices/envoices.component';
     ContentMainUserComponent,
     ContentMainClientComponent,
     EnvoicesComponent,
+    ClientDetailComponent,
+    DataTableComponent,
+    EnvoiceClientComponent,
   
   ],
   imports: [
@@ -72,7 +81,7 @@ import { EnvoicesComponent } from './admin/envoices/envoices.component';
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
     FormsModule // forms
   ],
-  providers: [AuthService,IsLoginGuard,UserService,NotificationService,ClientService,AdminGuard],
+  providers: [AuthService,IsLoginGuard,UserService,NotificationService,ClientService,AdminGuard,EnvoicesService,ServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

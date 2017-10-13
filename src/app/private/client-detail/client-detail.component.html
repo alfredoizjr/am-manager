@@ -1,0 +1,35 @@
+<div *ngIf="data; then client else noClient"> </div>
+
+<ng-template #client>
+  <div @fade class="row">
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <div class="media">
+            <img class="d-flex align-self-center mr-3" [src]="data.avatarUrl" style="width: 65px">
+            <div class="media-body">
+              <h5 class="mt-0 text-muted">{{data.fullname}}</h5>
+              <p><b>Title or Position:</b> {{data.position}}</p>
+              <p><b>Primary Phone:</b> {{data.phone}}</p>
+             <hr>
+             <a class="btn btn-success" [routerLink]="[ '/envoice-client', data.uid]"><i class="fa fa-usd" aria-hidden="true"></i>Add Envoice</a>
+             <a class="btn btn-success" href="">link</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md">
+      <div class="card">
+        <div class="card-body">
+          <h3 class="text-muted">Coments</h3>
+          <data-table></data-table>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #noClient>
+  No client
+</ng-template>

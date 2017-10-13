@@ -8,24 +8,27 @@ import * as firebase from 'firebase';
 
 @Injectable()
 export class UserService {
-  userDoc: AngularFirestoreDocument<any>
+  userDoc: AngularFirestoreDocument<User>
+  userSet:AngularFirestoreDocument<any>
   userCollection: AngularFirestoreCollection<any[]>
   user: Observable<any[]>
+  useSet:Observable<User>
   public progress: any = 0;
   constructor(private afDb: AngularFirestore) {
 
   }
 
   regAdminOrRegularUser(uid, user: User, role?: string) {
-    this.userDoc = this.afDb.collection('user').doc(uid);
-    this.userDoc.set({
+    this.userSet = this.afDb.collection('user').doc(uid);
+    this.userSet.set({
       fullname: user.fullname,
       email: user.email,
       singInData: new Date().toString(),
       position: user.position,
       phone: '(954) 709-1318',
       ext: user.ext,
-      role: role
+      role: role,
+      uid: uid
     })
   }
 
@@ -35,8 +38,8 @@ export class UserService {
   }
 
   getCurrentProfile(uid) {
-    let userDoc = this.afDb.doc('user/' + uid);
-    return userDoc.valueChanges();
+    this.userSet  = this.afDb.doc('user/' + uid);
+    return this.useSet = this.userSet.valueChanges();
   }
 
   updateProfile(uid, userData) {
@@ -73,8 +76,8 @@ export class UserService {
   }
 
   userSaveAvatar(uid,fileUrl){
-    this.userDoc = this.afDb.doc('user/' +uid);
-    this.userDoc.update({avatarUrl: fileUrl});
+    this.userSet = this.afDb.doc('user/' +uid);
+    this.userSet.update({avatarUrl: fileUrl});
   }
 
 }
