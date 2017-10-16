@@ -1,0 +1,9 @@
+.space{
+  padding-bottom:  20px;  
+}
+
+@media print{
+    .hidden-on-print{
+        display: none;
+    }
+}

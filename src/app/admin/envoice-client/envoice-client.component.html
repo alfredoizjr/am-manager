@@ -2,20 +2,70 @@
     <div class="col-md-12">
     <div class="card">
       <div *ngIf="serv.services" class="card-body">
-        <h3 class="card-title text-center text-muted">Service</h3>
+        <h3 class="card-title text-center text-muted hidden-on-print">Service</h3>
         <hr>
-          <form (ngSubmit)="submitEnvoices(f.value)" #f="ngForm" >
+          <form (ngSubmit)="submitEnvoices(f.value)" #f="ngForm"  class="hidden-on-print">
             <div class="row">
-              <div class="col-md-10">
+              <div class="col-md-2">
                   <select class="form-control" ngModel name="service">
                     <option *ngFor="let service of serv.services | async" [value]="service.serviceName">{{service.serviceName}}</option>
                   </select>
               </div>
-              <div class="col-md-2 text-center align-middle">
+              <div class="col-md-5">
+                  <div class="form-group">
+                      <input type="text" name="detail" ngModel class="form-control" id="detail" placeholder="detail">
+                    </div>
+              </div>
+              <div class="col-md-4">
+                  <div class="input-group">
+                      <input class="form-control" placeholder="yyyy-mm-dd"
+                             name="doDate" ngModel ngbDatepicker #d="ngbDatepicker">
+                      <button class="input-group-addon" (click)="d.toggle()" type="button">
+                          <i class="fa fa-calendar" aria-hidden="true"></i>
+                      </button>
+                    </div>
+              </div>
+              <div class="col-md-1 text-center align-middle">
                   <button type="submit" class="btn btn-success  btn-block"><i class="fa fa-plus-square" aria-hidden="true"></i></button>
               </div>
             </div>
            </form>
+           <hr>
+           <br>
+           <div *ngIf="general" class="row">
+             <div class="col-md-4">
+               <h6>AM Global Group LLC</h6>
+               <p>660 S Federal Hwy Ste. 103</p>
+               <p>Pompano Beach, FL 333062 USA</p>
+               <p class="text-muted">admin@amglobalgroup.com</p>
+               <br>
+               <h6>Bill To</h6>
+               <p>{{general.fullname}}</p>
+               <p>{{general.businessName}}</p>
+               <p>{{general.address}} {{general.zipcode}}</p>
+             </div>
+             <div class="col-md-4"></div>
+             <div  class="col-md-4">
+                <p><b>Date:</b> {{general.date | date: 'shortDate'}}</p>
+                <p><b>Do Date:</b> {{general.doDate.month}} / {{general.doDate.day}} / {{general.doDate.year}}</p>
+                <p><b>TERMS:</b> {{general.terms}}</p>
+              </div>
+           </div>
+           <br><br>
+           <div class="row bg-success">
+             <div class="col-md-6">Activity</div>
+             <div class="col-md-6 text-center"> Amount</div>
+           </div>
+            <br><br>
+           <div *ngFor="let item of serviceSet" class="row">
+             <div class="col-6">
+                 <h5>{{item.nameService}}</h5>
+                  <p>{{item.detail}}</p>
+                </div>
+                <div class="col-md-6 text-center">
+                 <p>{{item.price}}</p>
+                </div>
+           </div>
       </div>
     </div>
   </div>

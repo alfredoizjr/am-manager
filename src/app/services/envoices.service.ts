@@ -11,15 +11,29 @@ export class EnvoicesService {
 
   envoiceDoc: AngularFirestoreDocument<Envoice>
   envoice: AngularFirestoreDocument<Envoice>
+  servicesCollection:AngularFirestoreCollection<any[]>
+  serviceCollection:Observable<any[]>
   constructor(private afDb: AngularFirestore) { }
 
 
 setEnvoices(service:Envoice){
-    this.afDb.doc('envoices/'+ service.uid).update(service);
+    this.afDb.doc('envoices/'+ service.uid).set(service);
+    this.afDb.doc('envoices/'+ service.uid).collection('services').doc(service.service).set({
+      price: 1200,
+      detail: service.detail,
+      nameService: service.service
+    })
+    
 }
 
-getInvoices(){
+getInvoicesServices(uid){
+  let envoService = this.afDb.doc('envoices/'+ uid).collection('services');
+  return envoService.valueChanges(); 
+}
 
+getEnvoicesGeneral(uid){
+  let envoService = this.afDb.doc('envoices/'+ uid);
+  return envoService.valueChanges(); 
 }
 
 }
