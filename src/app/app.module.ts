@@ -5,7 +5,8 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
 import { AppRouterRoutingModule } from './app-router/app-router-routing.module';
 import {FormsModule} from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { CustomFormsModule } from 'ng2-validation'
+import { CustomFormsModule } from 'ng2-validation';
+import { UuidModule } from 'ng2-uuid';
 
 //firebase
 import { AngularFireModule } from 'angularfire2';
@@ -79,7 +80,8 @@ import { EnvoiceClientComponent } from './admin/envoice-client/envoice-client.co
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
-    FormsModule // forms
+    FormsModule, // forms
+    UuidModule
   ],
   providers: [AuthService,IsLoginGuard,UserService,NotificationService,ClientService,AdminGuard,EnvoicesService,ServiceService],
   bootstrap: [AppComponent]

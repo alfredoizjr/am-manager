@@ -9,6 +9,7 @@ export class ServiceService {
 
   servicesCollection:AngularFirestoreCollection<any[]>;
   public services:Observable<any[]>;
+  servicePrice:Observable<any[]>;
   
   constructor(private afDb: AngularFirestore) { 
     this.getServices();

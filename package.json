@@ -28,6 +28,7 @@
     "core-js": "^2.4.1",
     "firebase": "^4.5.0",
     "font-awesome": "^4.7.0",
+    "ng2-uuid": "0.0.3",
     "ng2-validation": "^4.2.0",
     "rxjs": "^5.4.2",
     "web-animations-js": "^2.3.1",

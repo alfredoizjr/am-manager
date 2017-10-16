@@ -10,4 +10,5 @@ export interface Envoice{
     businessName?:string;
     doDate?:any;
     terms?:string;
+    uuidCode?:string;
 }

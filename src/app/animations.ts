@@ -6,4 +6,11 @@ export let fade = trigger('fade',[
     
 ]);
 
+export let inBotom = trigger('inBotom',[
+    transition(':enter',[style({trasnform: 'translateY(20px)' ,opacity: 0}),animate('1s ease-in')]),
+    transition(':leave',[animate(500),style({opacity: 0})]),
+    
+]);
+
+
   
