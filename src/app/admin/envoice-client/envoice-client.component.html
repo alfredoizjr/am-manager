@@ -52,8 +52,11 @@
                 <b>Envoice #:</b> {{general.uuidCode}}</p>
               <p>
                 <b>Date:</b> {{general.date | date: 'shortDate'}}</p>
-              <p>
+              <p *ngIf="general.doDate; else noDoDate">
                 <b>Do Date:</b> {{general.doDate?.month}}/{{general.doDate?.day}}/{{general.doDate?.year}}</p>
+                <ng-template #noDoDate>
+                  <p><b>Do Date:</b> <span class="badge badge-danger">Pedding</span></p>
+                </ng-template>
               <p>
                 <b>TERMS:</b> {{general.terms}}</p>
             </div>
