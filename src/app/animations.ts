@@ -20,8 +20,14 @@ export let leftFed = trigger('leftFed',[
 ]);
 
 export let bottomFade = trigger('bottomFade',[
-    transition(':enter',[style({transform: 'translatey(20px)' ,opacity: 0}),animate('0.5s ease-in')]),
+    transition(':enter',[style({transform: 'translateY(20px)' ,opacity: 0}),animate('0.5s ease-in')]),
     transition(':leave',[animate(500),style({opacity: 0})]),
+    
+]);
+
+export let topFade = trigger('topFade',[
+    transition(':enter',[style({transform: 'translateY(20px)' ,opacity: 0}),animate('0.5s ease-in')]),
+    transition(':leave',[animate('0.5s ease-out'),style({transform: 'translateY(20px)',  opacity: 0})]),
     
 ]);
 

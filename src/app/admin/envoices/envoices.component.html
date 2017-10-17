@@ -1,3 +1,38 @@
-
-
-
+<div @fade *ngIf="invServ.listInvoices" class="row">
+        <div @bottomFade class="col-md-12 hidden-on-print">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                      <a routerLink="/">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                       Invoices
+                    </li>
+                  </ol>
+            </div>
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>client Name</th>
+                            <th>Bussines Name</th>
+                            <th>Date</th>
+                            <th>Do Date</th>
+                            <th>status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of invServ.listInvoices | async" (click)="goToInvoice(item.uid)">
+                            <th>{{item.fullname}}</th>
+                            <td>{{item.businessName}}</td>
+                            <td>{{item.date | date:'shortDate'}}</td>
+                            <td>{{item.doDate}}</td>
+                            <td><span class="badge badge-success">on time</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

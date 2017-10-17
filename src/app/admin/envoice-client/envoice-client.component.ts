@@ -1,9 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { fade, inBotom,leftFed, bottomFade } from './../../animations';
+import { fade, inBotom, leftFed, bottomFade, topFade } from './../../animations';
 import { UserService } from './../../services/user.service';
 import { Router, Route, ActivatedRoute } from '@angular/router';
 import { Uuid } from 'ng2-uuid';
 import { Envoice } from './../../models/envoice-client';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Location } from '@angular/common';
+//services
+import { NotificationsService } from 'angular2-notifications';
 import { ServiceService } from './../../services/service.service';
 import { EnvoicesService } from './../../services/envoices.service';
 
@@ -11,109 +15,143 @@ import { EnvoicesService } from './../../services/envoices.service';
   selector: 'app-envoice-client',
   templateUrl: './envoice-client.component.html',
   styleUrls: ['./envoice-client.component.css'],
-  animations:[
+  animations: [
     inBotom,
     fade,
     leftFed,
-    bottomFade
+    bottomFade,
+    topFade
   ]
 })
-export class EnvoiceClientComponent implements OnInit,OnDestroy {
+export class EnvoiceClientComponent implements OnInit, OnDestroy {
 
   form: Envoice;
   user: any;
   id: string;
-  serviceSet:any[] = [];
-  general:any;
-  total:number;
-  tax:number = 6;
-  plusTaxe:number;
-  avatar:string;
-  doDateRef:any;
+  serviceSet: any[] = [];
+  general: any;
+  total: number;
+  tax: number = 6;
+  plusTaxe: number;
+  avatar: string;
+  date: any;
+  doDate:any;
+  // form
+  formActive = new FormGroup({
+    detail: new FormControl('', [Validators.required, Validators.minLength(5)]),
+    doDate: new FormControl(),
+    service: new FormControl('', Validators.required)
+  });
 
   constructor(private serv: ServiceService,
     private envoiceServ: EnvoicesService,
     private route: ActivatedRoute,
     private userServ: UserService,
-    private router:Router,
-    private uuid: Uuid) { }
+    private router: Router,
+    private uuid: Uuid,
+    private location:Location,
+    public notiServ:NotificationsService) { }
 
   ngOnInit() {
-    this.route.params.subscribe(par =>{
-      this.envoiceServ.getInvoicesServices(par.id).subscribe(data=>{
+    this.route.params.subscribe(par => {
+      this.envoiceServ.getInvoicesServices(par.id).subscribe(data => {
         this.serviceSet = data;
-        console.log(this.serviceSet);
         this.total = this.getTotal(data);
         this.plusTaxe = this.getTotalPlusTaxe(this.total);
+
       });
-      this.envoiceServ.getEnvoicesGeneral(par.id).subscribe(general =>{
-         this.general = general;
+      this.envoiceServ.getEnvoicesGeneral(par.id).subscribe(general => {
+        this.general = general;
+  
       })
     })
 
     this.route.params.subscribe(par => this.id = par.id);
-    this.userServ.getCurrentProfile(this.id).subscribe((data) =>{ 
+    this.userServ.getCurrentProfile(this.id).subscribe((data) => {
       this.avatar = data.avatarUrl;
     });
-    
   }
 
-  submitEnvoices(form) {
-   // get the profile user for use some data
-
-   this.userServ.getCurrentProfile(this.id).subscribe(data => {
-      
-      //  if the field of do date is empty just set the old one
-       this.doDateRef = (form.doDate) ? form.doDate.month +"/"+form.doDate.day+"/"+ form.doDate.year : this.general.doDate;
-     //set the objet for update the data;
-        let newForm: Envoice = {
-          fullname: data.fullname,
-          uid: data.uid,
-          service: form.service,
-          qty: + 1,
-          date: new Date().toDateString(),
-          detail: form.detail,
-          address:data.address,
-          zipcode:data.zipcode,
-          businessName:data.business,
-          doDate: this.doDateRef,
-          terms: 'COD',
-          uuidCode: this.uuid.v1()
-        }
-         // sent the data
-        return this.envoiceServ.setEnvoices(newForm);
-     });
- }
-// get the total amount with out tax
- getTotal(value){
-   let total:number =0
-   for (var index = 0; index < value.length; index++) {
-     total += value[index].price;
-     }
-     return total;
+  submitEnvoices() {
+    // if have value on do date field
+    if (this.formActive.get('doDate').value) {
+      this.date = this.formActive.get('doDate').value.month + "/" + this.formActive.get('doDate').value.day + "/" + this.formActive.get('doDate').value.year;
     }
 
-// add the tax
- getTotalPlusTaxe(total){
-   return total * 0.06;
- }
- 
- openPrint(){
-  window.print();
- }
 
- cancelEnvoice(){
-   this.router.navigate(['/client-detail/',this.id]);
- }
+    // get the profile user for use some data
+    this.userServ.getCurrentProfile(this.id).subscribe(data => {
+      
+      // if the envoice have uinique number alredy or not
+        let code = (!this.general)? this.uuid.v1() : this.general.uuidCode;
+      //if the field of do date is empty just set the old one
+      let doDate = (this.formActive.get('doDate').value) ? this.date : this.general.doDate;
+      //set the objet for update the data;
+      let newForm: Envoice = {
+        fullname: data.fullname,
+        uid: data.uid,
+        service: this.formActive.get('service').value,
+        qty: + 1,
+        date: new Date().toDateString(),
+        detail: this.formActive.get('detail').value,
+        address: data.address,
+        zipcode: data.zipcode,
+        businessName: data.business,
+        doDate: doDate,
+        terms: 'COD',
+        uuidCode: code
+      }
+      // sent the data
+      return this.envoiceServ.setEnvoices(newForm);
+    });
+  }
+  // get the total amount with out tax
+  getTotal(value) {
+    let total: number = 0
+    for (var index = 0; index < value.length; index++) {
+      total += value[index].price;
+    }
+    return total;
+  }
 
- removeServiceInVoice(docId){
-    this.envoiceServ.removeInvoiceService(this.id,docId);
- }
+  // add the tax
+  getTotalPlusTaxe(total) {
+    return total * 0.06;
+  }
 
- ngOnDestroy() {
-   //Called once, before the instance is destroyed.
-   //Add 'implements OnDestroy' to the class.
- 
- }
+  openPrint() {
+    window.print();
+  }
+
+  // cancelInvoice() {
+  //   this.router.navigate(['/client-detail/', this.id]);
+  // }
+  //remove the service set in side of invoice doc
+  removeServiceInVoice(docId) {
+    this.envoiceServ.removeInvoiceService(this.id, docId);
+  }
+
+  //remove the invoice in self
+  removeInvoice() {
+    this.envoiceServ.removeTheInvoice(this.id);
+  }
+
+  ngOnDestroy() {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+
+  }
+
+  cancelInvoice() {
+    this.location.back(); // <-- go back to previous location on cancel
+  }
+
+  setInvoiceInUser(uid){
+    let invoice = {invoice:true};
+    this.userServ.updateProfile(uid,invoice).then(()=>{
+      this.notiServ.success('The envoices is now complete save');
+    })
+  }
+
 
 }

@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { AppRouterRoutingModule } from './app-router/app-router-routing.module';
-import {FormsModule} from '@angular/forms';
+import {FormsModule,ReactiveFormsModule} from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { CustomFormsModule } from 'ng2-validation';
 import { UuidModule } from 'ng2-uuid';
@@ -81,7 +81,8 @@ import { EnvoiceClientComponent } from './admin/envoice-client/envoice-client.co
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
     FormsModule, // forms
-    UuidModule
+    UuidModule,
+    ReactiveFormsModule
   ],
   providers: [AuthService,IsLoginGuard,UserService,NotificationService,ClientService,AdminGuard,EnvoicesService,ServiceService],
   bootstrap: [AppComponent]

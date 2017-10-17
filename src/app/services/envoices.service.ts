@@ -16,7 +16,11 @@ export class EnvoicesService {
   servicesCollection: AngularFirestoreCollection<any[]>
   serviceCollection: Observable<any[]>
   price: any;
-  constructor(private afDb: AngularFirestore,public notfServ:NotificationService) { }
+  listCollectionInvoices:AngularFirestoreCollection<Envoice>
+  listInvoices:Observable<Envoice[]>;
+  constructor(private afDb: AngularFirestore,public notfServ:NotificationService) { 
+    this.gettheListOfInvoice();
+  }
 
 
   setEnvoices(service: Envoice) {
@@ -54,6 +58,11 @@ export class EnvoicesService {
     return envoService.valueChanges();
   }
 
+  private gettheListOfInvoice(){
+    this.listCollectionInvoices = this.afDb.collection('envoices');
+    return this.listInvoices = this.listCollectionInvoices.valueChanges();
+  }
+
 
   private getServicePrice(name): Observable<Service[]> {
 
@@ -63,5 +72,12 @@ export class EnvoicesService {
     let price: Observable<Service[]>;
     return price = ref.valueChanges();
   }
+
+  removeTheInvoice(uid){
+    let deleteInvoice = this.afDb.collection('envoices').doc(uid);
+     deleteInvoice.delete().then(()=>{
+       this.notfServ.success('the Invoices Was Delete');
+     })
+    }
 
 }

@@ -3,7 +3,7 @@ export interface Envoice{
     fullname?:string;
     date?: any;
     qty?:number;
-    service?:string;
+    service?:any;
     detail?:string;
     address?:string;
     zipcode?:string;
