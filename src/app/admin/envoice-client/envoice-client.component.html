@@ -1,9 +1,9 @@
 <div @fade class="row">
   <div class="col-md-12">
     <div class="card">
-        <img @inBotom *ngIf="avatar" [src]="avatar" class="rounded float-left avatar hidden-on-print">
+      <img @inBotom *ngIf="avatar" [src]="avatar" class="rounded float-left avatar hidden-on-print">
       <div *ngIf="serv.services" class="card-body">
-        <h3 class="card-title text-center text-muted hidden-on-print">Service</h3>
+        <h3 class="card-title text-center text-muted hidden-on-print">Envoice</h3>
         <hr class="hidden-on-print">
         <form (ngSubmit)="submitEnvoices(f.value)" #f="ngForm" class="hidden-on-print">
           <div class="row">
@@ -53,10 +53,13 @@
               <p>
                 <b>Date:</b> {{general.date | date: 'shortDate'}}</p>
               <p *ngIf="general.doDate; else noDoDate">
-                <b>Do Date:</b> {{general.doDate?.month}}/{{general.doDate?.day}}/{{general.doDate?.year}}</p>
-                <ng-template #noDoDate>
-                  <p><b>Do Date:</b> <span class="badge badge-danger">Pedding</span></p>
-                </ng-template>
+                <b>Do Date:</b> {{general.doDate}}</p>
+              <ng-template #noDoDate>
+                <p>
+                  <b>Do Date:</b>
+                  <span class="badge badge-danger">Pedding</span>
+                </p>
+              </ng-template>
               <p>
                 <b>TERMS:</b> {{general.terms}}</p>
             </div>
@@ -73,36 +76,47 @@
                 <th>Date</th>
                 <th>Quantity</th>
                 <th>Price</th>
+                <th class="hidden-on-print"></th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let item of serviceSet" class="align-middle">
+              <tr @leftFed *ngFor="let item of serviceSet" class="align-middle">
                 <td>
                   <h5>{{item?.nameService}}</h5>
                   <p>{{item?.detail}}</p>
                 </td>
                 <td>
-                    {{general?.date | date: 'shortDate'}}
+                  {{general?.date | date: 'shortDate'}}
                 </td>
                 <td>1</td>
                 <td>{{item?.price | currency:'USD':true:'4.2'}}</td>
+                <td class="hidden-on-print">
+                  <button class="btn btn-danger" (click)="removeServiceInVoice(item.nameService)">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                  </button>
+                </td>
               </tr>
               <tr>
                 <td></td>
                 <td></td>
                 <td></td>
-                <td class="bg-color-print" style="text-align:letf;">
+                <td class="hidden-on-print"></td>
+                <td @bottomFade *ngIf="total" class="bg-color-print" style="text-align:letf;">
                   <p>
-                     <b>SubTotal: </b> {{total | currency:'USD':true:'4.2'}}<br>
-                     <b>Tax({{tax}}%):</b> {{plusTaxe}}<br>
-                     <b>Total:</b> {{total + plusTaxe | currency:'USD':true:'4.2'}}
-                   </p>
+                    <b>SubTotal: </b> {{total | currency:'USD':true:'4.2'}}
+                    <br>
+                    <b>Tax({{tax}}%):</b> {{plusTaxe}}
+                    <br>
+                    <b>Total:</b> {{total + plusTaxe | currency:'USD':true:'4.2'}}
+                  </p>
                 </td>
               </tr>
             </tbody>
           </table>
           <div class="col-md-12 text-right hidden-on-print">
-            <button class="btn btn-secondary" (click)="openPrint()"><i class="fa fa-print" aria-hidden="true"></i></button>
+            <button class="btn btn-secondary" (click)="openPrint()">
+              <i class="fa fa-print" aria-hidden="true"></i>
+            </button>
             <button class="btn btn-danger" (click)="cancelEnvoice()">Cancel</button>
             <button class="btn btn-primary">Submit</button>
           </div>

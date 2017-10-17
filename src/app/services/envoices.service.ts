@@ -44,6 +44,11 @@ export class EnvoicesService {
     return envoService.valueChanges();
   }
 
+  removeInvoiceService(uid,doc){
+    let envoService = this.afDb.doc('envoices/' + uid).collection('services').doc(doc);
+    return envoService.delete();
+  }
+
   getEnvoicesGeneral(uid) {
     let envoService = this.afDb.doc('envoices/' + uid);
     return envoService.valueChanges();

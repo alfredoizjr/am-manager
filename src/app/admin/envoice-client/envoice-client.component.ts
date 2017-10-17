@@ -1,9 +1,9 @@
-import { fade, inBotom } from './../../animations';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { fade, inBotom,leftFed, bottomFade } from './../../animations';
 import { UserService } from './../../services/user.service';
 import { Router, Route, ActivatedRoute } from '@angular/router';
 import { Uuid } from 'ng2-uuid';
 import { Envoice } from './../../models/envoice-client';
-import { Component, OnInit } from '@angular/core';
 import { ServiceService } from './../../services/service.service';
 import { EnvoicesService } from './../../services/envoices.service';
 
@@ -13,10 +13,12 @@ import { EnvoicesService } from './../../services/envoices.service';
   styleUrls: ['./envoice-client.component.css'],
   animations:[
     inBotom,
-    fade
+    fade,
+    leftFed,
+    bottomFade
   ]
 })
-export class EnvoiceClientComponent implements OnInit {
+export class EnvoiceClientComponent implements OnInit,OnDestroy {
 
   form: Envoice;
   user: any;
@@ -27,6 +29,7 @@ export class EnvoiceClientComponent implements OnInit {
   tax:number = 6;
   plusTaxe:number;
   avatar:string;
+  doDateRef:any;
 
   constructor(private serv: ServiceService,
     private envoiceServ: EnvoicesService,
@@ -39,12 +42,12 @@ export class EnvoiceClientComponent implements OnInit {
     this.route.params.subscribe(par =>{
       this.envoiceServ.getInvoicesServices(par.id).subscribe(data=>{
         this.serviceSet = data;
+        console.log(this.serviceSet);
         this.total = this.getTotal(data);
         this.plusTaxe = this.getTotalPlusTaxe(this.total);
       });
       this.envoiceServ.getEnvoicesGeneral(par.id).subscribe(general =>{
          this.general = general;
-         
       })
     })
 
@@ -56,11 +59,13 @@ export class EnvoiceClientComponent implements OnInit {
   }
 
   submitEnvoices(form) {
-   
-    this.route.params.switchMap(par => {
-      return this.userServ.getCurrentProfile(par.id)
-    }).subscribe(data => {
-     
+   // get the profile user for use some data
+
+   this.userServ.getCurrentProfile(this.id).subscribe(data => {
+      
+      //  if the field of do date is empty just set the old one
+       this.doDateRef = (form.doDate) ? form.doDate.month +"/"+form.doDate.day+"/"+ form.doDate.year : this.general.doDate;
+     //set the objet for update the data;
         let newForm: Envoice = {
           fullname: data.fullname,
           uid: data.uid,
@@ -71,14 +76,15 @@ export class EnvoiceClientComponent implements OnInit {
           address:data.address,
           zipcode:data.zipcode,
           businessName:data.business,
-          doDate: form.doDate,
+          doDate: this.doDateRef,
           terms: 'COD',
           uuidCode: this.uuid.v1()
         }
-         this.envoiceServ.setEnvoices(newForm);
+         // sent the data
+        return this.envoiceServ.setEnvoices(newForm);
      });
  }
-
+// get the total amount with out tax
  getTotal(value){
    let total:number =0
    for (var index = 0; index < value.length; index++) {
@@ -87,6 +93,7 @@ export class EnvoiceClientComponent implements OnInit {
      return total;
     }
 
+// add the tax
  getTotalPlusTaxe(total){
    return total * 0.06;
  }
@@ -97,6 +104,16 @@ export class EnvoiceClientComponent implements OnInit {
 
  cancelEnvoice(){
    this.router.navigate(['/client-detail/',this.id]);
+ }
+
+ removeServiceInVoice(docId){
+    this.envoiceServ.removeInvoiceService(this.id,docId);
+ }
+
+ ngOnDestroy() {
+   //Called once, before the instance is destroyed.
+   //Add 'implements OnDestroy' to the class.
+ 
  }
 
 }
