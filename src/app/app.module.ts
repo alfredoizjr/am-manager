@@ -20,6 +20,7 @@ import {UserService,
         EnvoicesService,
         NotificationService,
         ServiceService,
+        AlertsUserService
         } from './services/index-service';
 //guards
 import { IsLoginGuard } from './guards/is-login.guard';
@@ -84,7 +85,15 @@ import { EnvoiceClientComponent } from './admin/envoice-client/envoice-client.co
     UuidModule,
     ReactiveFormsModule
   ],
-  providers: [AuthService,IsLoginGuard,UserService,NotificationService,ClientService,AdminGuard,EnvoicesService,ServiceService],
+  providers: [AuthService,
+              IsLoginGuard,
+              UserService,
+              NotificationService,
+              ClientService,
+              AdminGuard,
+              EnvoicesService,
+              ServiceService,
+              AlertsUserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -4,3 +4,22 @@ button{
 .dropdown-toggle{
     cursor: pointer;
 }
+
+
+.padding-space{
+   padding-left: 5em;
+   padding-right: 5em; 
+}
+
+.dropdown-toggle::after {
+    content: none;
+}
+
+#navbarDropdownMenuLink > i{
+    margin-top: 10px;
+}
+
+#navbarDropdownMenuLink > span{
+    position: absolute;
+    left: 13px;
+}

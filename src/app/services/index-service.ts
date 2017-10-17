@@ -1,3 +1,4 @@
+export { AlertsUserService } from './alerts-user.service';
 export { ServiceService } from './service.service';
 export { NotificationService } from './notification.service';
 export { ClientService } from './client.service';

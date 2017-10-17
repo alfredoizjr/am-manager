@@ -7,9 +7,12 @@ import { Envoice } from './../../models/envoice-client';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
 //services
+import { AlertsUserService } from './../../services/alerts-user.service';
+import { AuthService } from './../../services/auth.service';
 import { NotificationsService } from 'angular2-notifications';
 import { ServiceService } from './../../services/service.service';
 import { EnvoicesService } from './../../services/envoices.service';
+import { ISubscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-envoice-client',
@@ -36,6 +39,7 @@ export class EnvoiceClientComponent implements OnInit, OnDestroy {
   avatar: string;
   date: any;
   doDate:any;
+  subcribe: ISubscription;
   // form
   formActive = new FormGroup({
     detail: new FormControl('', [Validators.required, Validators.minLength(5)]),
@@ -50,9 +54,19 @@ export class EnvoiceClientComponent implements OnInit, OnDestroy {
     private router: Router,
     private uuid: Uuid,
     private location:Location,
-    public notiServ:NotificationsService) { }
+    public notiServ:NotificationsService,
+    private authServ:AuthService,
+    private alerServ:AlertsUserService) { }
 
   ngOnInit() {
+   
+    this.subcribe = this.authServ.user$.subscribe(user => {
+      if (!user) {
+        this.router.navigate(['login']);
+        return false;
+      }
+      });
+    
     this.route.params.subscribe(par => {
       this.envoiceServ.getInvoicesServices(par.id).subscribe(data => {
         this.serviceSet = data;
@@ -134,24 +148,28 @@ export class EnvoiceClientComponent implements OnInit, OnDestroy {
   //remove the invoice in self
   removeInvoice() {
     this.envoiceServ.removeTheInvoice(this.id);
+    this.setInvoiceInUser(this.id,false);
   }
 
-  ngOnDestroy() {
-    //Called once, before the instance is destroyed.
-    //Add 'implements OnDestroy' to the class.
-
-  }
 
   cancelInvoice() {
     this.location.back(); // <-- go back to previous location on cancel
   }
 
-  setInvoiceInUser(uid){
-    let invoice = {invoice:true};
-    this.userServ.updateProfile(uid,invoice).then(()=>{
-      this.notiServ.success('The envoices is now complete save');
+  setInvoiceInUser(uid:string , invoice?:boolean){
+    console.log(invoice);
+    let action = (invoice == false) ? {invoice:false}: {invoice:true};
+    this.alerServ.setAlertToUser(uid,action).then(()=>{
+      if(invoice == true){
+        return this.notiServ.success('the invoice was save!');
+      }
     })
   }
 
+  ngOnDestroy() {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+     this.subcribe.unsubscribe();
+  }
 
 }
