@@ -6,13 +6,15 @@ import { Uuid } from 'ng2-uuid';
 import { Envoice } from './../../models/envoice-client';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
+import { ISubscription } from 'rxjs/Subscription';
+import 'rxjs/add/operator/switchMap';
 //services
 import { AlertsUserService } from './../../services/alerts-user.service';
 import { AuthService } from './../../services/auth.service';
 import { NotificationsService } from 'angular2-notifications';
 import { ServiceService } from './../../services/service.service';
 import { EnvoicesService } from './../../services/envoices.service';
-import { ISubscription } from 'rxjs/Subscription';
+
 
 @Component({
   selector: 'app-envoice-client',
@@ -29,7 +31,8 @@ import { ISubscription } from 'rxjs/Subscription';
 export class EnvoiceClientComponent implements OnInit, OnDestroy {
 
   form: Envoice;
-  user: any;
+  invoiseSave: boolean;
+  adminUser:object;
   id: string;
   serviceSet: any[] = [];
   general: any;
@@ -38,7 +41,6 @@ export class EnvoiceClientComponent implements OnInit, OnDestroy {
   plusTaxe: number;
   avatar: string;
   date: any;
-  doDate:any;
   subcribe: ISubscription;
   // form
   formActive = new FormGroup({
@@ -53,20 +55,25 @@ export class EnvoiceClientComponent implements OnInit, OnDestroy {
     private userServ: UserService,
     private router: Router,
     private uuid: Uuid,
-    private location:Location,
-    public notiServ:NotificationsService,
-    private authServ:AuthService,
-    private alerServ:AlertsUserService) { }
+    private location: Location,
+    public notiServ: NotificationsService,
+    private authServ: AuthService,
+    private alerServ: AlertsUserService) { }
 
   ngOnInit() {
+   this.subcribe = this.authServ.user$.switchMap(data=>{
+      return this.userServ.getCurrentProfile(data.uid);
+      }).subscribe(user =>{
+        this.adminUser = user.fullname;
+      });
    
     this.subcribe = this.authServ.user$.subscribe(user => {
       if (!user) {
         this.router.navigate(['login']);
         return false;
       }
-      });
-    
+    });
+
     this.route.params.subscribe(par => {
       this.envoiceServ.getInvoicesServices(par.id).subscribe(data => {
         this.serviceSet = data;
@@ -76,7 +83,7 @@ export class EnvoiceClientComponent implements OnInit, OnDestroy {
       });
       this.envoiceServ.getEnvoicesGeneral(par.id).subscribe(general => {
         this.general = general;
-  
+
       })
     })
 
@@ -84,6 +91,19 @@ export class EnvoiceClientComponent implements OnInit, OnDestroy {
     this.userServ.getCurrentProfile(this.id).subscribe((data) => {
       this.avatar = data.avatarUrl;
     });
+    // see is the invoice is already seve
+    this.subcribe = this.alerServ.getAlerts(this.id)
+      .subscribe(data => {
+        return data;
+      });
+     // see is in the invoice is any service set already
+     // is not can't use submit button
+      this.subcribe = this.envoiceServ.getInvoicesServices(this.id)
+          .subscribe(data=>{
+             this.invoiseSave = (data.length > 0)? true : false;
+          });
+     
+          
   }
 
   submitEnvoices() {
@@ -95,9 +115,9 @@ export class EnvoiceClientComponent implements OnInit, OnDestroy {
 
     // get the profile user for use some data
     this.userServ.getCurrentProfile(this.id).subscribe(data => {
-      
+
       // if the envoice have uinique number alredy or not
-        let code = (!this.general)? this.uuid.v1() : this.general.uuidCode;
+      let code = (!this.general) ? this.uuid.v1() : this.general.uuidCode;
       //if the field of do date is empty just set the old one
       let doDate = (this.formActive.get('doDate').value) ? this.date : this.general.doDate;
       //set the objet for update the data;
@@ -148,7 +168,7 @@ export class EnvoiceClientComponent implements OnInit, OnDestroy {
   //remove the invoice in self
   removeInvoice() {
     this.envoiceServ.removeTheInvoice(this.id);
-    this.setInvoiceInUser(this.id,false);
+    this.setInvoiceInUser(this.id, false, "delete");
   }
 
 
@@ -156,20 +176,21 @@ export class EnvoiceClientComponent implements OnInit, OnDestroy {
     this.location.back(); // <-- go back to previous location on cancel
   }
 
-  setInvoiceInUser(uid:string , invoice?:boolean){
-    console.log(invoice);
-    let action = (invoice == false) ? {invoice:false}: {invoice:true};
-    this.alerServ.setAlertToUser(uid,action).then(()=>{
-      if(invoice == true){
-        return this.notiServ.success('the invoice was save!');
+  setInvoiceInUser(uid: string, invoice?: boolean, inst?: string) {
+    
+    let action = (invoice == false) ? { invoice: false, visited: false } : { invoice: true, visited: false, createBy: this.adminUser};
+
+    this.alerServ.setAlertToUser(uid, action).then(() => {
+      if (inst != "delete") {
+        return this.notiServ.success('the invoice was save');
       }
-    })
+    });
   }
 
   ngOnDestroy() {
     //Called once, before the instance is destroyed.
     //Add 'implements OnDestroy' to the class.
-     this.subcribe.unsubscribe();
+    this.subcribe.unsubscribe();
   }
 
 }

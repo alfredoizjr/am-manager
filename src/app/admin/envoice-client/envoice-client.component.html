@@ -66,12 +66,18 @@
         <br>
         <div @fade *ngIf="general" class="row" >
           <div class="col-md-12">
+              <div class="pull-left m-t-30">
+                  <h6>AM Global Group LLC</h6>
+                  <p>660 S Federal Hwy Ste. 103</p>
+                  <p>Pompano Beach, FL 333062 USA</p>
+                  <p class="text-muted">admin@amglobalgroup.com</p>
+              </div>
+              <div class="pull-right m-t-30">
+                  <img class="img-fluid" src="assets/img/logo-am.jpg">
+              </div>
+          </div>
+          <div class="col-md-12">
             <div class="pull-left m-t-30">
-              <h6>AM Global Group LLC</h6>
-              <p>660 S Federal Hwy Ste. 103</p>
-              <p>Pompano Beach, FL 333062 USA</p>
-              <p class="text-muted">admin@amglobalgroup.com</p>
-              <br>
               <h6>Bill To</h6>
               <p>{{general.fullname}}</p>
               <p>{{general.businessName}}</p>
@@ -94,12 +100,12 @@
                 <b>TERMS:</b> {{general.terms}}</p>
             </div>
           </div>
+          <hr>
         </div>
-        <table></table>
         <br>
         <br>
         <div class="row">
-          <table class="table table-striped">
+          <table class="table table-striped table-responsive">
             <thead>
               <tr>
                 <th>Name Service</th>
@@ -131,7 +137,8 @@
                 <td></td>
                 <td></td>
                 <td class="hidden-on-print"></td>
-                <td @bottomFade *ngIf="total" class="bg-color-print" style="text-align:letf;">
+                <!-- fi we have total we goint to showing this td if not -->
+                <td @bottomFade *ngIf="total; else noTotal" class="bg-color-print" style="text-align:letf;">
                   <p>
                     <b>SubTotal: </b> {{total | currency:'USD':true:'4.2'}}
                     <br>
@@ -140,6 +147,10 @@
                     <b>Total:</b> {{total + plusTaxe | currency:'USD':true:'4.2'}}
                   </p>
                 </td>
+                 <!-- this one -->
+                <ng-template #noTotal>
+                  <td></td>
+                </ng-template>
               </tr>
             </tbody>
           </table>
@@ -148,8 +159,11 @@
               <i class="fa fa-print" aria-hidden="true"></i>
             </button>
             <button class="btn btn-primary" (click)="cancelInvoice()">back</button>
-            <button class="btn btn-danger" (click)="removeInvoice()" [disabled]="serviceSet.length > 0">Delete Invoice</button>
-            <button class="btn btn-success" (click)="setInvoiceInUser(general.uid)">Submit</button>
+            <button *ngIf="general"  class="btn btn-danger" (click)="removeInvoice()" [disabled]="serviceSet.length > 0">Delete Invoice</button>
+            <button
+                *ngIf="invoiseSave" 
+                [disabled]="(alerServ.singleAlert | async)?.alert && (alerServ.singleAlert | async)?.alert.invoice" 
+                class="btn btn-success" (click)="setInvoiceInUser(general.uid)">Submit</button>
           </div>
         </div>
       </div>

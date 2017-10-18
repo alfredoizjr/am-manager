@@ -28,5 +28,16 @@ error(error:string){
   });
 }
 
+info(message:string){
+  this._service.info('info!',message,{
+    timeOut: 2500,
+    showProgressBar: true,
+    pauseOnHover: false,
+    clickToClose: false,
+    maxLength: 200,
+    animate: "scale"
+  });
+}
+
 
 }

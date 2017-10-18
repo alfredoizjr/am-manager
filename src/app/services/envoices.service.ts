@@ -76,7 +76,7 @@ export class EnvoicesService {
   removeTheInvoice(uid){
     let deleteInvoice = this.afDb.collection('envoices').doc(uid);
      deleteInvoice.delete().then(()=>{
-       this.notfServ.success('the Invoices Was Delete');
+       this.notfServ.info('the Invoices Was Delete');
      })
     }
 
